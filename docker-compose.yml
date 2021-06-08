@@ -1,0 +1,26 @@
+version: "2"
+services:
+  ignition:
+    image: "inductiveautomation/ignition:8.1.7"
+    environment: 
+      GATEWAY_ADMIN_PASSWORD: "password"
+      IGNITION_EDITION: "FULL"
+    ports: 
+      - "8088:8088"
+      - "8000:8000"
+      - "8043:8043"
+    depends_on:
+      - sqlserver
+    volumes:
+      # - ./gw-data:/usr/local/bin/ignition/data
+      # - ./shared:/usr/local/bin/ignition/shared
+      - ./gw-data:/usr/local/bin/ignition/data
+      # - gw-data:/usr
+
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2019-CU10-ubuntu-18.04"
+    environment: 
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Delvalle534!"
+    ports:
+      - "1433:1433"
